@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Binaria</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('asset/matrix.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            opacity: 0.5; /* Ajusta este valor para cambiar la opacidad */
+            z-index: -1; /* Coloca la imagen detrás del contenido */
+        }
+        input, button {
+            margin: 5px;
+        }
+        table {
+            margin-bottom: 10px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header img {
+            max-width: 100px; /* Ajusta el tamaño según sea necesario */
+            height: auto;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        .section h2 {
+            margin-bottom: 10px;
+        }
+        .coloreada {
+            background-color: yellow;
+        }
+        .fondo-tabla {
+            background-color: lightgray;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Calculadora Binaria</h1>
+        <img src="asset/leporplay.png" alt="Imagen" id="top-right-image">
+    </div>
+
+    <div class="section">
+       <h2>Conversión de Decimal a Otros Formatos</h2> 
+        <table border="1" class="fondo-tabla">
+            <tr>
+                <td><label for="decimalInput">Ingrese un número decimal:</label></td>
+                <td class="coloreada">
+                    <input type="number" id="decimalInput" step="any" placeholder="Número decimal">
+                </td>
+                <td><label for="bitInput">Cantidad de bits:</label></td>
+                <td class="coloreada">
+                <input type="number" id="bitInput" placeholder="Bits"></td>
+            </tr>
+            <tr>
+                <td><label for="binaryOutput">Número binario:</label></td>
+                <td><input type="text" id="binaryOutput" readonly title="Número binario"></td>
+                <td><label for="complement1Output">Complemento a 1:</label></td>
+                <td><input type="text" id="complement1Output" readonly title="Complemento a 1"></td>
+                <td><label for="complement2Output">Complemento a 2:</label></td>
+                <td><input type="text" id="complement2Output" readonly title="Complemento a 2"></td>
+            </tr>
+            <tr>
+                <td><label for="octalOutput">Número octal:</label></td>
+                <td><input type="text" id="octalOutput" readonly title="Número octal"></td>
+            </tr>
+            <tr>
+                <td><label for="hexOutput">Número hexadecimal:</label></td>
+                <td><input type="text" id="hexOutput" readonly title="Número hexadecimal"></td>
+            </tr>
+        </table>
+        <button onclick="pedirNumeroDecimal()">Ingresar Número</button>
+        <button onclick="borrarContenidoDecimal()">Borrar Contenido</button>
+        <button onclick="calcularBinario()">Calcular</button>
+    </div>
+
+    <div class="section">
+        <h2>Conversión de Binario a Otros Formatos</h2>
+        <table border="1" class="fondo-tabla">
+            <tr>
+                <td><label for="binaryInput">Ingrese un número binario:</label></td>
+                <td class="coloreada"><input type="text" id="binaryInput" placeholder="Número binario"></td>
+            </tr>
+            <tr>
+                <td><label for="decimalOutput">Número decimal:</label></td>
+                <td><input type="text" id="decimalOutput" readonly title="Número decimal"></td>
+                <td><label for="complement1OutputBin">Complemento a 1:</label></td>
+                <td><input type="text" id="complement1OutputBin" readonly title="Complemento a 1"></td>
+                <td><label for="complement2OutputBin">Complemento a 2:</label></td>
+                <td><input type="text" id="complement2OutputBin" readonly title="Complemento a 2"></td>
+            </tr>
+            <tr>
+                <td><label for="octalOutputBin">Número octal:</label></td>
+                <td><input type="text" id="octalOutputBin" readonly title="Número octal"></td>
+            </tr>
+            <tr>
+                <td><label for="hexOutputBin">Número hexadecimal:</label></td>
+                <td><input type="text" id="hexOutputBin" readonly title="Número hexadecimal"></td>
+            </tr>
+        </table>
+        <button onclick="pedirNumeroBinario()">Ingresar Número</button>
+        <button onclick="borrarContenidoBinario()">Borrar Contenido</button>
+        <button onclick="calcularDesdeBinario()">Calcular</button>
+    </div>
+
+    <div class="section">
+        <h2>Instrucciones Conversión Decimal</h2>
+        <table border="1" class="fondo-tabla">
+            <tr>
+                <td><label>Ingrese el número decimal en la casilla correspondiente y la cantidad de bits que quiere para el número binario.</label></td>
+            </tr>
+            <tr>
+            <td><label>Tenga presente que el número de bits sea adecuado para representar el número decimal en binario y presione el botón "Calcular"</label></td>
+            </tr>
+        </table>
+        <h2>Instrucciones Conversión Binaria</h2>
+        <table border="1" class="fondo-tabla">
+            <tr>
+                <td><label>Ingrese el número binario en la casilla correspondiente y presiones el botón "Calcular"</label></td>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        function pedirNumeroDecimal() {
+            document.getElementById('decimalInput').focus();
+        }
+
+        function borrarContenidoDecimal() {
+            document.getElementById('decimalInput').value = '';
+            document.getElementById('bitInput').value = '';
+            document.getElementById('binaryOutput').value = '';
+            document.getElementById('complement1Output').value = '';
+            document.getElementById('complement2Output').value = '';
+            document.getElementById('octalOutput').value = '';
+            document.getElementById('hexOutput').value = '';
+        }
+
+        function calcularBinario() {
+            let decimal = parseFloat(document.getElementById('decimalInput').value);
+            let bits = parseInt(document.getElementById('bitInput').value);
+            if (isNaN(decimal)) {
+                alert('Por favor, ingrese un número decimal válido.');
+                return;
+            }
+            if (isNaN(bits) || bits <= 0) {
+                alert('Por favor, ingrese una cantidad válida de bits.');
+                return;
+            }
+
+            let binario = decimal.toString(2).padStart(bits, '0');
+            if (binario.length > bits) {
+                alert('El número decimal no puede ser representado con la cantidad de bits especificada.');
+                return;
+            }
+            document.getElementById('binaryOutput').value = binario;
+
+            let complemento1 = binario.split('').map(bit => bit === '0' ? '1' : '0').join('');
+            document.getElementById('complement1Output').value = complemento1;
+
+            let complemento2 = (parseInt(complemento1, 2) + 1).toString(2).padStart(bits, '0');
+            document.getElementById('complement2Output').value = complemento2;
+
+            let octal = parseInt(binario, 2).toString(8);
+            document.getElementById('octalOutput').value = octal;
+
+            let hexadecimal = parseInt(binario, 2).toString(16).toUpperCase();
+            document.getElementById('hexOutput').value = hexadecimal;
+        }
+
+        function pedirNumeroBinario() {
+            document.getElementById('binaryInput').focus();
+        }
+
+        function borrarContenidoBinario() {
+            document.getElementById('binaryInput').value = '';
+            document.getElementById('decimalOutput').value = '';
+            document.getElementById('complement1OutputBin').value = '';
+            document.getElementById('complement2OutputBin').value = '';
+            document.getElementById('octalOutputBin').value = '';
+            document.getElementById('hexOutputBin').value = '';
+        }
+
+        function calcularDesdeBinario() {
+            let binario = document.getElementById('binaryInput').value;
+            if (!/^[01]+$/.test(binario)) {
+                alert('Por favor, ingrese un número binario válido.');
+                return;
+            }
+
+            let decimal = parseInt(binario, 2);
+            document.getElementById('decimalOutput').value = decimal;
+
+            let complemento1 = binario.split('').map(bit => bit === '0' ? '1' : '0').join('');
+            document.getElementById('complement1OutputBin').value = complemento1;
+
+            let complemento2 = (parseInt(complemento1, 2) + 1).toString(2).padStart(binario.length, '0');
+            document.getElementById('complement2OutputBin').value = complemento2;
+
+            let octal = parseInt(binario, 2).toString(8);
+            document.getElementById('octalOutputBin').value = octal;
+
+            let hexadecimal = parseInt(binario, 2).toString(16).toUpperCase();
+            document.getElementById('hexOutputBin').value = hexadecimal;
+        }
+    </script>
+</body>
+</html>
